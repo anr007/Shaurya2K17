@@ -1,0 +1,143 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="red.shaurya2k17.Sports.Cricket.DataEntryCricket3">
+
+   <ScrollView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:orientation="vertical">
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+
+               <android.support.design.widget.TextInputLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+
+                   <EditText
+                       android:minHeight="45dp"
+                       android:padding="7dp"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:hint="Current Over"
+                       android:id="@+id/curr_over_dec_3"
+                       android:textSize="18sp"
+                       android:textStyle="normal|bold"/>
+
+               </android.support.design.widget.TextInputLayout>
+
+           </LinearLayout>
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+
+               <Spinner
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:id="@+id/curr_bowler_dec_3"
+                   android:textSize="18sp"
+                   android:textStyle="normal|bold"
+                   android:minHeight="45dp"
+                   android:layout_margin="5dp"
+                   android:layout_marginTop="2dp"
+                   android:padding="2dp"
+                   style="@style/Widget.AppCompat.Spinner.Underlined"
+                   android:visibility="visible" />
+
+
+           </LinearLayout>
+
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+
+               <Spinner
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:id="@+id/on_strike_bats_dec_3"
+                   android:textSize="18sp"
+                   android:textStyle="normal|bold"
+                   android:minHeight="45dp"
+                   android:layout_margin="5dp"
+                   android:layout_marginTop="2dp"
+                   android:padding="2dp"
+                   style="@style/Widget.AppCompat.Spinner.Underlined"
+                   android:visibility="visible" />
+
+
+           </LinearLayout>
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+
+               <Spinner
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:id="@+id/other_bats_dec_3"
+                   android:textSize="18sp"
+                   android:textStyle="normal|bold"
+                   android:minHeight="45dp"
+                   android:layout_margin="5dp"
+                   android:layout_marginTop="2dp"
+                   android:padding="2dp"
+                   style="@style/Widget.AppCompat.Spinner.Underlined"
+                   android:visibility="visible" />
+
+
+           </LinearLayout>
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+
+               <android.support.design.widget.TextInputLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+
+                   <EditText
+                       android:minHeight="45dp"
+                       android:padding="7dp"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:hint="Current Score"
+                       android:id="@+id/curr_score_dec_3"
+                       android:textSize="18sp"
+                       android:textStyle="normal|bold"
+                       android:visibility="visible" />
+
+               </android.support.design.widget.TextInputLayout>
+
+           </LinearLayout>
+
+           <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:minHeight="80dp">
+
+               <Button
+                   android:text="Next"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:id="@+id/next_3"
+                   android:layout_centerVertical="true"
+                   android:layout_centerHorizontal="true" />
+
+
+
+           </RelativeLayout>
+
+
+
+
+       </LinearLayout>
+   </ScrollView>
+
+</FrameLayout>
