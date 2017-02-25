@@ -144,7 +144,7 @@ public class Home extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
+        //getMenuInflater().inflate(R.menu.home, menu);
         return true;
     }
 
@@ -156,7 +156,7 @@ public class Home extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.about) {
+        if (id == R.id.about_nav) {
             return true;
         }
 
@@ -216,7 +216,12 @@ public class Home extends AppCompatActivity
             replaceFragments(StatsFragment.class,"stats");
             setTitle("Fest Stats");
             // while changing title here see get stats async task
-        }else if (id == R.id.log_out_nav) {
+        }else if(id == R.id.about_nav)
+        {
+
+
+
+        } else if (id == R.id.log_out_nav) {
 
             status = context.getSharedPreferences("status", MODE_PRIVATE);
             status.edit().putBoolean("in",false).apply();

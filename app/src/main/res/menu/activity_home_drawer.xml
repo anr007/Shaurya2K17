@@ -29,10 +29,16 @@
             android:enabled="false" />
 
         <item
+            android:id="@+id/about_nav"
+            android:title="Developers"
+            android:visible="true"
+            android:icon="@drawable/ic_developer_mode_black_48dp"/>
+        <item
             android:id="@+id/log_out_nav"
             android:title="Logout"
             android:visible="false"
             android:icon="@drawable/ic_account_circle_black_48dp"/>
+
     </group>
 
 </menu>

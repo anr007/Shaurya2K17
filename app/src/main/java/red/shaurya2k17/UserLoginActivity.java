@@ -13,6 +13,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -37,10 +38,17 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Iterator;
 
 import red.shaurya2k17.NetworkTools.ConnectivityReceiver;
+
+import static android.os.Build.VERSION_CODES.M;
 
 
 public class UserLoginActivity extends AppCompatActivity
@@ -49,6 +57,8 @@ public class UserLoginActivity extends AppCompatActivity
     private static final int RC_SIGN_IN = 100;
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private String authEmail = "admin@shaurya.com";
+    ValueEventListener listener;
+
 
 
     SharedPreferences status;
@@ -71,12 +81,16 @@ public class UserLoginActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_login);
 
+
+
         context=this;
 
 
         database = FirebaseDatabase.getInstance();
         mRef = database.getReference("users");
         mFirebaseAuth = FirebaseAuth.getInstance();
+
+
 
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -134,11 +148,13 @@ public class UserLoginActivity extends AppCompatActivity
 
         if(gsignin) {
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (Build.VERSION.SDK_INT >= M) {
                 ActivityCompat.requestPermissions(UserLoginActivity.this,
-                        new String[]{"android.permission.READ_CONTACTS"},
+                        new String[]{"android.permission.READ_CONTACTS",
+                                "android.permission.READ_PHONE_STATE"},//see permission manager
                         1);
             } else {
+
                 signInIntent = Auth.GoogleSignInApi
                         .getSignInIntent(mGoogleApiClient);
                 startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -239,7 +255,8 @@ public class UserLoginActivity extends AppCompatActivity
             case 1: {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                        && ((grantResults[0] == PackageManager.PERMISSION_GRANTED))
+                        &&(grantResults[1]== PackageManager.PERMISSION_GRANTED)){
 
 
                     signInIntent = Auth.GoogleSignInApi
@@ -250,8 +267,20 @@ public class UserLoginActivity extends AppCompatActivity
 
                 } else {
 
-                    Toast.makeText(this,"Contacts read Permission DENIED",Toast.LENGTH_SHORT)
-                            .show();
+                    if(((grantResults[0] == PackageManager.PERMISSION_GRANTED))
+                            &&(grantResults[1]== PackageManager.PERMISSION_GRANTED))
+                    {
+                        Toast.makeText(this,"Contacts read && Telephony Permission DENIED",Toast.LENGTH_SHORT)
+                                .show();
+                    }else if((grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                        Toast.makeText(this, "Telephony Permission DENIED", Toast.LENGTH_SHORT)
+                                .show();
+                    }
+                    else if((grantResults[1]== PackageManager.PERMISSION_GRANTED)){
+                        Toast.makeText(this,"Contacts read Permission DENIED",Toast.LENGTH_SHORT)
+                                .show();
+
+                    }
 
                 }
                 return;
@@ -305,13 +334,76 @@ public class UserLoginActivity extends AppCompatActivity
 
                         if(task.isSuccessful())
                         {
-                            hideProgressDialog();
 
-                            status = context.getSharedPreferences("status", MODE_PRIVATE);
-                            status.edit().putBoolean("in",true).apply();
-                            Intent intent = new Intent(UserLoginActivity.this, Home.class);
-                            startActivity(intent);
-                            finish();
+                            TelephonyManager tm = (TelephonyManager)getSystemService
+                                    (Context.TELEPHONY_SERVICE);
+                            final String device_id = tm.getDeviceId();
+                            final String Uid=mFirebaseAuth.getCurrentUser().getUid();
+                            final String email=mFirebaseAuth.getCurrentUser().getEmail();
+
+
+
+
+
+
+                            listener=new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                    Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
+                                    Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
+
+                                    Boolean key=false;
+                                    while (iterator.hasNext()) {
+                                        UserVerificationData value = iterator.next().
+                                                getValue(UserVerificationData.class);
+                                        if(value.getmDeviceId().equals(device_id))
+                                        {
+                                            if(value.getmEmail().equals(email))
+                                            {
+                                                status = context.getSharedPreferences("status", MODE_PRIVATE);
+                                                status.edit().putBoolean("in",true).apply();
+                                                hideProgressDialog();
+                                                Intent intent = new Intent(UserLoginActivity.this, Home.class);
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                            else {
+                                                hideProgressDialog();
+                                                Toast.makeText(UserLoginActivity.this,"Use "+
+                                                        value.getmEmail()+
+                                                        " to Login from this device",
+                                                        Toast.LENGTH_SHORT).show();
+                                            }
+                                            key=true;
+                                            break;
+                                        }
+                                    }
+                                    if(!key)
+                                    {
+                                        final UserVerificationData newUser=new UserVerificationData();
+                                        newUser.setmEmail(email);
+                                        newUser.setmDeviceId(device_id);
+                                        newUser.setmUid(Uid);
+                                        mRef.child(Uid).setValue(newUser);
+                                    }
+
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError error) {
+                                    // Failed to read value
+                                    //Log.w(TAG, "Failed to read value.", error.toException());
+                                }
+                            };
+
+
+                            mRef.addValueEventListener(listener);
+
+
+
+
+
                         }
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
@@ -440,6 +532,14 @@ public class UserLoginActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    public void onDestroy() {
+
+        if(listener!=null)
+        mRef.removeEventListener(listener);
+        super.onDestroy();
+
+    }
 
 
 }
