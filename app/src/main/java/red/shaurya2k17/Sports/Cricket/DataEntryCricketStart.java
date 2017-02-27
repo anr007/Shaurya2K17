@@ -18,8 +18,6 @@ import android.widget.Spinner;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.HashMap;
-
 import red.shaurya2k17.Admin.DataEntryActivity;
 import red.shaurya2k17.R;
 
@@ -116,7 +114,8 @@ public class DataEntryCricketStart extends Fragment implements AdapterView.OnIte
             alertDialog.setCanceledOnTouchOutside(true);
             alertDialog.setMessage("Do you want to Save this Data");
             alertDialog.setIcon(R.drawable.ic_save_teal_500_48dp);
-            alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Yes", new DialogInterface.OnClickListener() {
+            alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Yes",
+                    new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     CMatch cMatch=new CMatch();
 
@@ -132,11 +131,23 @@ public class DataEntryCricketStart extends Fragment implements AdapterView.OnIte
                     cMatch.setTossWonPref("");
                     mRef.child(cate).child(mat_nam.getText().toString()).setValue(cMatch);
 
-                    HashMap<String,String> map=new HashMap<>();
-                    map.put("mat_name",mat_nam.getText().toString());
-                    map.put("t1",team1);
-                    map.put("t2",team2);
-                    ((DataEntryActivity)getActivity()).replaceFragments(DataEntryCricket2.class,false,map);
+                    ((DataEntryActivity)getActivity()).mat_name=mat_nam.getText().toString();
+                    ((DataEntryActivity)getActivity()).t1=team1;
+                    ((DataEntryActivity)getActivity()).t2=team2;
+                    ((DataEntryActivity)getActivity()).tovers=overs.getText().toString();
+
+
+                    //TODO: Think for other ways
+                    mRef= database.getReference("summary");
+                    mRef.child(mat_nam.getText().toString()).child("0").
+                            child("Status").setValue("Match Started");
+
+
+
+                    ((DataEntryActivity)getActivity()).
+                            replaceFragments(DataEntryCricket2.class,false,null);
+
+
                 }
 
             });

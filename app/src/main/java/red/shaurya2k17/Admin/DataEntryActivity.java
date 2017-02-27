@@ -29,6 +29,43 @@ public class DataEntryActivity extends AppCompatActivity {
     View HomeView;
     View FragView;
 
+
+    //****************************** <Cricket> *****************
+
+    public String mat_name;
+    public String t1;
+    public int t1s;
+    public String t2;
+    public int t2s;
+    public String tovers;
+    public String curr_over;
+    public String curr_striker;
+    public String curr_non_striker;
+    public String curr_bowler;
+    public String t1_status;
+    public String t2_status;
+    public String toss_won;
+    public String tosswon_pref;
+    public String comment;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //**************************** <\Cricket> ********************
+    
+
     ExpandableListAdapter expandableListAdapter;
     ExpandableListView expandableListView;
     List<String> listDataHeader;
@@ -131,13 +168,19 @@ public class DataEntryActivity extends AppCompatActivity {
             fragment.setAllowEnterTransitionOverlap(true);
         }
         //fragmentManager.popBackStackImmediate();
-        Bundle bundle = new Bundle();
 
-        Set<Map.Entry<String, String>> set = map.entrySet();
-        for(Map.Entry<String, String> data : set){
-            bundle.putString(data.getKey(),data.getValue());
+
+        if(map!= null) {
+            Bundle bundle = new Bundle();
+
+            Set<Map.Entry<String, String>> set = map.entrySet();
+            for (Map.Entry<String, String> data : set) {
+                bundle.putString(data.getKey(), data.getValue());
+            }
+            fragment.setArguments(bundle);
         }
-        fragment.setArguments(bundle);
+
+
         if(addToBackStack) {
             fragmentManager.beginTransaction().replace(R.id.frag_view_Cricket, fragment)
                     .addToBackStack(null)

@@ -56,7 +56,7 @@ public class UserLoginActivity extends AppCompatActivity
 
     private static final int RC_SIGN_IN = 100;
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    private String authEmail = "admin@shaurya.com";
+    //private String authEmail = "admin@shaurya.com";
     ValueEventListener listener;
 
 
@@ -206,7 +206,7 @@ public class UserLoginActivity extends AppCompatActivity
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful() && mFirebaseAuth.getCurrentUser().getEmail().equals(authEmail)) {
+                                if (task.isSuccessful()) {
                                     hideProgressDialog();
                                     status = context.getSharedPreferences("status", MODE_PRIVATE);
                                     status.edit().putBoolean("in",true).apply();

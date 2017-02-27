@@ -41,6 +41,12 @@ public class DataEntryOversMain extends Fragment implements AdapterView.OnItemSe
     DatabaseReference mRef;
     FirebaseDatabase database;
 
+    String mat_name;
+    String t1;
+    String t2;
+
+
+
     public DataEntryOversMain() {
         // Required empty public constructor
     }
@@ -60,7 +66,12 @@ public class DataEntryOversMain extends Fragment implements AdapterView.OnItemSe
 
 
         database = FirebaseDatabase.getInstance();
-        mRef = database.getReference("stats"); // yet to be decided
+        mRef = database.getReference(); // yet to be decided
+
+        mat_name=getArguments().getString("mat_name");
+        t1=getArguments().getString("t1");
+        t2=getArguments().getString("t2");
+
 
 
         totalScore=(EditText)view.findViewById(R.id.tot_score_overs_main);
@@ -149,6 +160,13 @@ public class DataEntryOversMain extends Fragment implements AdapterView.OnItemSe
 
     void next_overs_main()
     {
+
+        mRef.child("ongoing").child("Cricket").child(mat_name).child("team1Score")
+                .setValue(on_Strike_runs);
+        //mRef.child("players").child(t1).child("")
+
+
+
 
     }
 

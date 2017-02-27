@@ -50,14 +50,52 @@
         <item>CSE</item>
         <item>ECE</item>
         <item>EEE</item>
-        <item>Mech</item>
-        <item>Civil</item>
+        <item>MECH</item>
+        <item>CIVIL</item>
     </string-array>
 
     <string-array name="Selection">
         <item>Select Preference</item>
-        <item>Batting</item>
-        <item>Bowling</item>
+        <item>batting</item>
+        <item>bowling</item>
+    </string-array>
+
+    <string-array name="CSE_Cricket_Players">
+        <item>Select Player</item>
+        <item>cs1</item>
+        <item>cs2</item>
+        <item>cs3</item>
+        <item>cs4</item>
+    </string-array>
+
+    <string-array name="ECE_Cricket_Players">
+        <item>Select Player</item>
+        <item>ec1</item>
+        <item>ec2</item>
+        <item>ec3</item>
+        <item>ec4</item>
+    </string-array>
+
+    <string-array name="MECH_Cricket_Players">
+        <item>Select Player</item>
+        <item>me1</item>
+        <item>me2</item>
+        <item>me3</item>
+        <item>me4</item>
+    </string-array>
+    <string-array name="EEE_Cricket_Players">
+        <item>Select Player</item>
+        <item>ee1</item>
+        <item>ee2</item>
+        <item>ee3</item>
+        <item>ee4</item>
+    </string-array>
+    <string-array name="CIVIL_Cricket_Players">
+        <item>Select Player</item>
+        <item>ce1</item>
+        <item>ce2</item>
+        <item>ce3</item>
+        <item>ce4</item>
     </string-array>
 
 

@@ -90,6 +90,7 @@ public class Home extends AppCompatActivity
         admin_nav= menuNav.findItem(R.id.admin_nav);
         logout_nav=menuNav.findItem(R.id.log_out_nav);
 
+
         if(mFirebaseAuth.getCurrentUser().getEmail().equals("admin@shaurya.com")) {
             admin_nav.setVisible(true);
             logout_nav.setVisible(true);

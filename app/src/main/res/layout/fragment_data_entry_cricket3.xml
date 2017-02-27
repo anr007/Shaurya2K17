@@ -31,6 +31,23 @@
                        android:textStyle="normal|bold"/>
 
                </android.support.design.widget.TextInputLayout>
+           </LinearLayout>
+
+
+           <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+
+
+           <TextView
+               android:minHeight="40dp"
+               android:text="Choose Current Bowler :"
+               android:padding="7dp"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:textStyle="normal|bold"
+               android:textSize="20sp"
+               android:textColor="@color/colorAccent" />
 
            </LinearLayout>
 
@@ -53,6 +70,22 @@
 
 
            </LinearLayout>
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+
+
+               <TextView
+                   android:minHeight="40dp"
+                   android:text="Choose Current On Strike Batsmen :"
+                   android:padding="7dp"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:textSize="20sp"
+                   android:textStyle="normal|bold"
+                   android:textColor="@color/colorAccent" />
+
+           </LinearLayout>
 
 
            <LinearLayout
@@ -72,6 +105,23 @@
                    style="@style/Widget.AppCompat.Spinner.Underlined"
                    android:visibility="visible" />
 
+
+           </LinearLayout>
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+
+
+               <TextView
+                   android:minHeight="40dp"
+                   android:text="Choose Current Non Striker :"
+                   android:padding="7dp"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:textSize="20sp"
+                   android:textStyle="normal|bold"
+                   android:textColor="@color/colorAccent" />
 
            </LinearLayout>
 

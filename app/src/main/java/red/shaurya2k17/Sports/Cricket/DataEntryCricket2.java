@@ -11,12 +11,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import red.shaurya2k17.Admin.DataEntryActivity;
 import red.shaurya2k17.R;
@@ -30,9 +30,7 @@ public class DataEntryCricket2 extends Fragment implements AdapterView.OnItemSel
     Spinner toss_won_pref;
     String tw;
     String twp;
-    String mat_name;
-    String t1;
-    String t2;
+
 
     String deflt="Toss Won By";
     Button next;
@@ -58,15 +56,14 @@ public class DataEntryCricket2 extends Fragment implements AdapterView.OnItemSel
         database = FirebaseDatabase.getInstance();
         mRef = database.getReference("ongoing"); // yet to be decided
 
-        mat_name=getArguments().getString("mat_name");
-        t1=getArguments().getString("t1");
-        t2=getArguments().getString("t2");
+
+        String parray=((DataEntryActivity)getActivity()).t1+"_Cricket_Players";
+        Toast.makeText(getContext(),parray,Toast.LENGTH_LONG).show();
 
         ArrayList<String> teams=new ArrayList<String>();
         teams.add(deflt);
-        teams.add(t1);
-        teams.add(t2);
-        //get values of t1 , t2 from db
+        teams.add(((DataEntryActivity)getActivity()).t1);
+        teams.add(((DataEntryActivity)getActivity()).t2);
 
         toss_won = (Spinner) view.findViewById(R.id.toss_won_dec_2);
         ArrayAdapter<String> adapter_toss_won = new ArrayAdapter<String>(getContext(),
@@ -110,13 +107,36 @@ public class DataEntryCricket2 extends Fragment implements AdapterView.OnItemSel
         // update the toss won details in ongoing match obj
         //replace with 3
 
-        mRef.child("Cricket").child(mat_name).child("tossWon").setValue(tw);
-        mRef.child("Cricket").child(mat_name).child("tossWonPref").setValue(twp);
-        HashMap<String,String> map=new HashMap<>();
-        map.put("mat_name",mat_name);
-        map.put("t1",t1);
-        map.put("t2",t2);
-        ((DataEntryActivity)getActivity()).replaceFragments(DataEntryCricket3.class,false,map);
+        mRef.child("Cricket").child(((DataEntryActivity)getActivity()).mat_name)
+                .child("tossWon").setValue(tw);
+        mRef.child("Cricket").child(((DataEntryActivity)getActivity()).mat_name)
+                .child("tossWonPref").setValue(twp);
+
+
+
+        ((DataEntryActivity)getActivity()).toss_won=tw;
+        ((DataEntryActivity)getActivity()).tosswon_pref=twp;
+        if(((DataEntryActivity)getActivity()).toss_won.
+                equals(((DataEntryActivity)getActivity()).t1))
+        {
+            ((DataEntryActivity)getActivity()).t1_status=twp;
+            if(twp.equals("batting"))
+            ((DataEntryActivity)getActivity()).t2_status="bowling";
+            else
+                ((DataEntryActivity)getActivity()).t2_status="batting";
+        }
+        else
+        {
+            ((DataEntryActivity)getActivity()).t2_status=twp;
+            if(twp.equals("batting"))
+                ((DataEntryActivity)getActivity()).t1_status="bowling";
+            else
+                ((DataEntryActivity)getActivity()).t1_status="batting";
+        }
+
+        ((DataEntryActivity)getActivity()).replaceFragments(DataEntryCricket3.class,false,null);
+
+
 
     }
 
