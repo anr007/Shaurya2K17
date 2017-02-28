@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.transition.Explode;
+import android.transition.Fade;
 import android.transition.Slide;
 import android.view.Gravity;
 import android.view.View;
@@ -34,19 +34,26 @@ public class DataEntryActivity extends AppCompatActivity {
 
     public String mat_name;
     public String t1;
-    public int t1s;
+    public String t1s;
     public String t2;
-    public int t2s;
+    public String t2s;
     public String tovers;
     public String curr_over;
     public String curr_striker;
     public String curr_non_striker;
     public String curr_bowler;
+    public String curr_ball;
     public String t1_status;
     public String t2_status;
     public String toss_won;
     public String tosswon_pref;
     public String comment;
+
+    public HashMap<String,ArrayList<String>> completed_bowlers=new HashMap<>();
+                                                    // list[0]=overs; list[1]=wickets;
+    public HashMap<String,ArrayList<String>> completed_batsmen=new HashMap<>();
+                                                  // list[0]=runs; list[1]=fours;
+                                                 // list[2]=sixes; list[3]=balls_played;
 
 
 
@@ -110,8 +117,8 @@ public class DataEntryActivity extends AppCompatActivity {
 
 
     private void prepareListData() {
-        listDataHeader = new ArrayList<String>();
-        listDataChild = new HashMap<String, List<String>>();
+        listDataHeader = new ArrayList<>();
+        listDataChild = new HashMap<>();
 
         // Adding child data
         listDataHeader.add("Athletics");
@@ -119,24 +126,25 @@ public class DataEntryActivity extends AppCompatActivity {
         listDataHeader.add("Games");
 
         // Adding child data
-        List<String> Athletics = new ArrayList<String>();
+        List<String> Athletics = new ArrayList<>();
         Athletics.add("Shotput");
 
 
-        List<String> Sports = new ArrayList<String>();
+        List<String> Sports = new ArrayList<>();
         Sports.add("Cricket");
         Sports.add("Football");
         Sports.add("Volleyball");
         Sports.add("Badminton");
 
 
-        List<String> Games = new ArrayList<String>();
+        List<String> Games = new ArrayList<>();
         Games.add("Chess");
 
 
         listDataChild.put(listDataHeader.get(0), Athletics); // Header, Child data
         listDataChild.put(listDataHeader.get(1), Sports);
         listDataChild.put(listDataHeader.get(2), Games);
+
 
     }
 
@@ -163,9 +171,17 @@ public class DataEntryActivity extends AppCompatActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         if(isLollipop()) {
-            fragment.setEnterTransition(new Slide(Gravity.RIGHT));
-            fragment.setExitTransition(new Explode());
-            fragment.setAllowEnterTransitionOverlap(true);
+            try{
+
+                fragment.setEnterTransition(new Slide(Gravity.END));
+                fragment.setExitTransition(new Fade());
+                fragment.setAllowEnterTransitionOverlap(true);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
         }
         //fragmentManager.popBackStackImmediate();
 
@@ -177,6 +193,7 @@ public class DataEntryActivity extends AppCompatActivity {
             for (Map.Entry<String, String> data : set) {
                 bundle.putString(data.getKey(), data.getValue());
             }
+
             fragment.setArguments(bundle);
         }
 

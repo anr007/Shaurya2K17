@@ -68,10 +68,6 @@ public class DataEntryOversMain extends Fragment implements AdapterView.OnItemSe
         database = FirebaseDatabase.getInstance();
         mRef = database.getReference(); // yet to be decided
 
-        mat_name=getArguments().getString("mat_name");
-        t1=getArguments().getString("t1");
-        t2=getArguments().getString("t2");
-
 
 
         totalScore=(EditText)view.findViewById(R.id.tot_score_overs_main);
@@ -145,11 +141,11 @@ public class DataEntryOversMain extends Fragment implements AdapterView.OnItemSe
 
 
 
-        next=(Button)view.findViewById(R.id.next_3);
+        next=(Button)view.findViewById(R.id.next_overs_main);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(v.getId() == R.id.next_start)
+                if(v.getId() == R.id.next_overs_main)
                 {
                     next_overs_main();
                 }

@@ -1,9 +1,11 @@
 package red.shaurya2k17.Sports.Cricket;
 
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,13 +62,13 @@ public class DataEntryCricket2 extends Fragment implements AdapterView.OnItemSel
         String parray=((DataEntryActivity)getActivity()).t1+"_Cricket_Players";
         Toast.makeText(getContext(),parray,Toast.LENGTH_LONG).show();
 
-        ArrayList<String> teams=new ArrayList<String>();
+        ArrayList<String> teams=new ArrayList<>();
         teams.add(deflt);
         teams.add(((DataEntryActivity)getActivity()).t1);
         teams.add(((DataEntryActivity)getActivity()).t2);
 
         toss_won = (Spinner) view.findViewById(R.id.toss_won_dec_2);
-        ArrayAdapter<String> adapter_toss_won = new ArrayAdapter<String>(getContext(),
+        ArrayAdapter<String> adapter_toss_won = new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_spinner_item,teams);
 
         adapter_toss_won.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -107,11 +109,21 @@ public class DataEntryCricket2 extends Fragment implements AdapterView.OnItemSel
         // update the toss won details in ongoing match obj
         //replace with 3
 
+
+        final AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+        alertDialog.setTitle("Save Confirmation");
+        alertDialog.setCancelable(true);
+        alertDialog.setCanceledOnTouchOutside(true);
+        alertDialog.setMessage("Do you want to Save this Data");
+        alertDialog.setIcon(R.drawable.ic_save_teal_500_48dp);
+        alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
         mRef.child("Cricket").child(((DataEntryActivity)getActivity()).mat_name)
                 .child("tossWon").setValue(tw);
         mRef.child("Cricket").child(((DataEntryActivity)getActivity()).mat_name)
                 .child("tossWonPref").setValue(twp);
-
 
 
         ((DataEntryActivity)getActivity()).toss_won=tw;
@@ -132,11 +144,31 @@ public class DataEntryCricket2 extends Fragment implements AdapterView.OnItemSel
                 ((DataEntryActivity)getActivity()).t1_status="bowling";
             else
                 ((DataEntryActivity)getActivity()).t1_status="batting";
+
         }
 
-        ((DataEntryActivity)getActivity()).replaceFragments(DataEntryCricket3.class,false,null);
 
 
+        if( ((DataEntryActivity)getActivity()).t1_status.equals("batting"))
+        {
+            ((DataEntryActivity)getActivity()).t1s="0";
+        }
+        else
+        {
+            ((DataEntryActivity)getActivity()).t2s="0";
+        }
+
+         ((DataEntryActivity)getActivity()).replaceFragments(DataEntryCricket3.class,false,null);
+
+
+       }
+      });
+        alertDialog.setButton(DialogInterface.BUTTON_POSITIVE,"No",
+                new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                alertDialog.cancel();}
+      });
+        alertDialog.show();
 
     }
 

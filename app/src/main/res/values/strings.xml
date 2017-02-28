@@ -98,6 +98,12 @@
         <item>ce4</item>
     </string-array>
 
+    <string-array name="CSE_Cricket_Players_Enrollment">
+
+        <item>Select Enrollment</item>
+        <item>BT</item>
+    </string-array>
+
 
     <string name="title_activity_user_login">Sign in</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email

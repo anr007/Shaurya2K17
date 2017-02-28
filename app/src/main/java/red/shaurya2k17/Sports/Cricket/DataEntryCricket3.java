@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+
 import red.shaurya2k17.Admin.DataEntryActivity;
 import red.shaurya2k17.R;
 
@@ -29,8 +31,8 @@ public class DataEntryCricket3 extends Fragment implements AdapterView.OnItemSel
     EditText currOver;
     EditText currScore;
     String bowler_name;
-    String onStrike_name;
-    String otherBats_name;
+    String striker_name;
+    String non_striker_name;
     Button next;
     DatabaseReference mRef;
     FirebaseDatabase database;
@@ -62,6 +64,24 @@ public class DataEntryCricket3 extends Fragment implements AdapterView.OnItemSel
 
         currOver=(EditText)view.findViewById(R.id.curr_over_dec_3);
         currScore=(EditText)view.findViewById(R.id.curr_score_dec_3);
+
+        currOver.setText( ((DataEntryActivity)getActivity()).curr_over);
+
+        if( ((DataEntryActivity)getActivity()).t1_status.equals("batting"))
+        {
+            currScore.setText( ((DataEntryActivity)getActivity()).t1s);
+        }
+        else
+        {
+            currScore.setText( ((DataEntryActivity)getActivity()).t2s);
+        }
+
+        currScore.setEnabled(false);
+        currOver.setEnabled(false);
+
+
+
+
 
 
 
@@ -168,11 +188,176 @@ public class DataEntryCricket3 extends Fragment implements AdapterView.OnItemSel
         // update the toss won details in ongoing match obj
 
         ((DataEntryActivity)getActivity()).curr_bowler=bowler_name;
-        ((DataEntryActivity)getActivity()).curr_striker=onStrike_name;
-        ((DataEntryActivity)getActivity()).curr_non_striker=otherBats_name;
+        ((DataEntryActivity)getActivity()).curr_striker= striker_name;
+        ((DataEntryActivity)getActivity()).curr_non_striker= non_striker_name;
+
+        mRef.child("ongoing").child("Cricket").child( ((DataEntryActivity)getActivity()).mat_name)
+                .child("curr_bowler").setValue(bowler_name);
+        mRef.child("ongoing").child("Cricket").child( ((DataEntryActivity)getActivity()).mat_name)
+                .child("curr_striker").setValue(striker_name);
+        mRef.child("ongoing").child("Cricket").child( ((DataEntryActivity)getActivity()).mat_name)
+                .child("curr_non_striker").setValue(non_striker_name);
 
 
 
+        // Bowler details ................................................................
+
+        if((((DataEntryActivity)getActivity()).completed_bowlers != null)
+                &&((DataEntryActivity)getActivity()).completed_bowlers.containsKey(bowler_name))
+        {
+            if(((DataEntryActivity)getActivity()).t1_status.equals("batting"))
+            {
+                ArrayList<String> details=((DataEntryActivity)getActivity())
+                        .completed_bowlers.get(bowler_name);
+
+                String wickets=details.get(1);
+                int overs=Integer.parseInt(details.get(0));
+                 overs=overs+1;
+
+                ArrayList<String> updated_details=new ArrayList<>();
+                updated_details.add(Integer.toString(overs));
+                updated_details.add(wickets);
+
+
+
+                ((DataEntryActivity)getActivity())
+                        .completed_bowlers.put(bowler_name,updated_details);
+                mRef.child("bowlers").child(((DataEntryActivity) getActivity()).t2).
+                        child(((DataEntryActivity)getActivity()).mat_name).child(bowler_name).
+                        child("overs").setValue(((DataEntryActivity)getActivity())
+                        .completed_bowlers.get(bowler_name));
+
+            }
+            else {
+
+                ArrayList<String> details=((DataEntryActivity)getActivity())
+                        .completed_bowlers.get(bowler_name);
+
+                String wickets=details.get(1);
+                int overs=Integer.parseInt(details.get(0));
+                overs=overs+1;
+
+                ArrayList<String> updated_details=new ArrayList<>();
+                updated_details.add(Integer.toString(overs));
+                updated_details.add(wickets);
+
+
+
+                ((DataEntryActivity)getActivity())
+                        .completed_bowlers.put(bowler_name,updated_details);
+                mRef.child("bowlers").child(((DataEntryActivity) getActivity()).t1).
+                        child(((DataEntryActivity)getActivity()).mat_name).child(bowler_name).
+                        child("overs").setValue(((DataEntryActivity)getActivity())
+                        .completed_bowlers.get(bowler_name).get(0));
+
+
+            }
+
+        }
+        else {
+
+            Bowler current_bowler=new Bowler();
+            current_bowler.setOvers("1");
+            current_bowler.setName(bowler_name);
+            current_bowler.setWickets("0");
+
+
+            ArrayList<String> details=new ArrayList<>();
+            details.add("1");
+            details.add("0");
+
+            ((DataEntryActivity)getActivity())
+                    .completed_bowlers.put(bowler_name,details);
+
+            if(((DataEntryActivity)getActivity()).t1_status.equals("batting"))
+            {
+
+                current_bowler.setTeam(((DataEntryActivity) getActivity()).t2);
+
+                mRef.child("bowlers").child(((DataEntryActivity) getActivity()).t2).
+                        child(((DataEntryActivity)getActivity()).mat_name).child(bowler_name).
+                        setValue(current_bowler);
+            }
+            else {
+
+                current_bowler.setTeam(((DataEntryActivity) getActivity()).t1);
+
+                mRef.child("bowlers").child(((DataEntryActivity) getActivity()).t1).
+                        child(((DataEntryActivity)getActivity()).mat_name).child(bowler_name)
+                        .setValue(current_bowler);
+
+            }
+
+        }
+
+        // Striker details ................................................................
+
+        if((((DataEntryActivity)getActivity()).completed_batsmen != null)
+                &&!((DataEntryActivity)getActivity()).completed_batsmen.containsKey(striker_name))
+        {
+            if(((DataEntryActivity)getActivity()).t1_status.equals("batting")) {
+                Batsmen current_striker = new Batsmen();
+                current_striker.setTeam(((DataEntryActivity) getActivity()).t1);
+                current_striker.setName(striker_name);
+                current_striker.setRuns("0");
+                current_striker.setFours("0");
+                current_striker.setSixes("0");
+
+                mRef.child("batsmen").child(((DataEntryActivity) getActivity()).t1).
+                        child(((DataEntryActivity) getActivity()).mat_name).child(striker_name).
+                        setValue(current_striker);
+            }
+            else
+            {
+                Batsmen current_striker = new Batsmen();
+                current_striker.setTeam(((DataEntryActivity) getActivity()).t2);
+                current_striker.setName(striker_name);
+                current_striker.setRuns("0");
+                current_striker.setFours("0");
+                current_striker.setSixes("0");
+
+                mRef.child("batsmen").child(((DataEntryActivity) getActivity()).t2).
+                        child(((DataEntryActivity) getActivity()).mat_name).child(striker_name).
+                        setValue(current_striker);
+
+            }
+
+        }
+
+        // Non Striker details ................................................................
+
+
+        if((((DataEntryActivity)getActivity()).completed_batsmen != null)
+                &&!((DataEntryActivity)getActivity()).completed_batsmen.containsKey(non_striker_name))
+        {
+            if(((DataEntryActivity)getActivity()).t1_status.equals("batting")) {
+                Batsmen current_non_striker = new Batsmen();
+                current_non_striker.setTeam(((DataEntryActivity) getActivity()).t1);
+                current_non_striker.setName(non_striker_name);
+                current_non_striker.setRuns("0");
+                current_non_striker.setFours("0");
+                current_non_striker.setSixes("0");
+
+                mRef.child("batsmen").child(((DataEntryActivity) getActivity()).t1).
+                        child(((DataEntryActivity) getActivity()).mat_name).child(non_striker_name).
+                        setValue(current_non_striker);
+            }
+            else
+            {
+                Batsmen current_non_striker = new Batsmen();
+                current_non_striker.setTeam(((DataEntryActivity) getActivity()).t2);
+                current_non_striker.setName(non_striker_name);
+                current_non_striker.setRuns("0");
+                current_non_striker.setFours("0");
+                current_non_striker.setSixes("0");
+
+                mRef.child("batsmen").child(((DataEntryActivity) getActivity()).t2).
+                        child(((DataEntryActivity) getActivity()).mat_name).child(non_striker_name).
+                        setValue(current_non_striker);
+
+            }
+
+        }
 
 
 
@@ -191,11 +376,11 @@ public class DataEntryCricket3 extends Fragment implements AdapterView.OnItemSel
                 break;
             case R.id.on_strike_bats_dec_3:
                 if(i>0)
-                    onStrike_name=onStrike.getItemAtPosition(i).toString();
+                    striker_name =onStrike.getItemAtPosition(i).toString();
                 break;
             case R.id.other_bats_dec_3:
                 if(i>0)
-                    otherBats_name=otherBats.getItemAtPosition(i).toString();
+                    non_striker_name =otherBats.getItemAtPosition(i).toString();
                 break;
         }
 

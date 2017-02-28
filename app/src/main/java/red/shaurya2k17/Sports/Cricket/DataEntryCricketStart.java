@@ -123,8 +123,8 @@ public class DataEntryCricketStart extends Fragment implements AdapterView.OnIte
                     cMatch.setOvers(overs.getText().toString());
                     cMatch.setTeam1(team1);
                     cMatch.setTeam2(team2);
-                    cMatch.setTeam2Score("");
-                    cMatch.setTeam1Score("");
+                    cMatch.setTeam2Score("0");
+                    cMatch.setTeam1Score("0");
                     cMatch.setComments("");
                     cMatch.setTossWon("");
                     cMatch.setWinner("");
@@ -135,6 +135,13 @@ public class DataEntryCricketStart extends Fragment implements AdapterView.OnIte
                     ((DataEntryActivity)getActivity()).t1=team1;
                     ((DataEntryActivity)getActivity()).t2=team2;
                     ((DataEntryActivity)getActivity()).tovers=overs.getText().toString();
+                    ((DataEntryActivity)getActivity()).curr_over="0";
+                    ((DataEntryActivity)getActivity()).curr_ball="0";
+                    ((DataEntryActivity)getActivity()).t1s="0";
+                    ((DataEntryActivity)getActivity()).t2s="0";
+
+
+
 
 
                     //TODO: Think for other ways
