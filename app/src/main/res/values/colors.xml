@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#ff4081</color>
+    <color name="colorPrimary">#ffca28</color>
+    <color name="colorPrimaryDark">#ffc107</color>
+    <color name="colorAccent">#212121</color>
+    <color name="login_status_bar">#212121</color>
+    <color name="home_background">#212121</color>
     <color name="background_material_dark_1">#303030</color>
     <color name="mblue">#03a9f4</color>
     <color name="mgreen">#009688</color>
-    <color name="mred"> #f44336</color>
-    <color name="morange"> #ffc107</color>
+    <color name="mred">#f44336</color>
+    <color name="morange">#ffc107</color>
     <color name="mpink"> #e91e63</color>
+    <color name="highlighted">#000000</color>
+    <color name="nothighlighted">#9e9e9e</color>
+    <color name="mgrey">#212121</color>
 
 </resources>

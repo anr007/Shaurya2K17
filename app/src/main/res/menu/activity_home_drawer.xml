@@ -15,7 +15,7 @@
             android:icon="@drawable/ic_whatshot_black_48dp" />
         <item
             android:id="@+id/time_table_nav"
-            android:title="Time Table"
+            android:title="Schedule"
             android:icon="@drawable/ic_timeline_black_48dp" />
         <item
             android:title="Admin"
@@ -29,10 +29,20 @@
             android:enabled="false" />
 
         <item
+            android:id="@+id/info_nav"
+            android:title="About Shaurya"
+            android:visible="true"
+            android:icon="@drawable/ic_info_black_48dp"/>
+
+        <item
             android:id="@+id/about_nav"
             android:title="Developers"
             android:visible="true"
             android:icon="@drawable/ic_developer_mode_black_48dp"/>
+
+
+
+
         <item
             android:id="@+id/log_out_nav"
             android:title="Logout"

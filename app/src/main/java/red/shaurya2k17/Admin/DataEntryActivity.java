@@ -25,12 +25,12 @@ import static red.shaurya2k17.Utils.isLollipop;
 public class DataEntryActivity extends AppCompatActivity {
 
 
-    String cMatName;
     View HomeView;
     View FragView;
 
 
     //****************************** <Cricket> *****************
+
 
     public String mat_name;
     public String t1;
@@ -38,9 +38,12 @@ public class DataEntryActivity extends AppCompatActivity {
     public String t2;
     public String t2s;
     public String tovers;
+    public String t1_wickets;
+    public String t2_wickets;
     public String curr_over;
     public String curr_striker;
     public String curr_non_striker;
+    public String curr_innings;
     public String curr_bowler;
     public String curr_ball;
     public String t1_status;
@@ -54,6 +57,7 @@ public class DataEntryActivity extends AppCompatActivity {
     public HashMap<String,ArrayList<String>> completed_batsmen=new HashMap<>();
                                                   // list[0]=runs; list[1]=fours;
                                                  // list[2]=sixes; list[3]=balls_played;
+
 
 
 

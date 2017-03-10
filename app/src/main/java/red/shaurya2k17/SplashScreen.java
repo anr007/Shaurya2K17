@@ -4,14 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-
+import android.view.Window;
 
 
 public class SplashScreen extends Activity {
 
-    private static int SPLASH_TIME_OUT = 500;
+    private static int SPLASH_TIME_OUT = 50;
 
 
     SharedPreferences status;
@@ -20,6 +21,13 @@ public class SplashScreen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            Window window = getWindow();
+            //window.setNavigationBarColor(getResources().getColor(R.color.colorPrimary));
+            window.setStatusBarColor(getResources().getColor(R.color.colorPrimary));
+
+        }
 
 
         new Handler().postDelayed(new Runnable() {

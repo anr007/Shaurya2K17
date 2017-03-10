@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:name=".NetworkTools.ConnectivityCheck"
@@ -48,12 +48,23 @@
 
         <activity
             android:name=".UserLoginActivity"
-            android:label="@string/title_activity_user_login"/>
-
-        <activity android:name=".Admin.DataEntryActivity"
-            android:label="Data Entry"/>
-
-
+            android:label="@string/title_activity_user_login"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Admin.DataEntryActivity"
+            android:label="Data Entry" />
+        <activity
+            android:name=".IntroActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AboutShauryaActivity"
+            android:label="@string/title_activity_about_shaurya"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AboutNITMZ"
+            android:label="About NIT MZ"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
     </application>
 
 </manifest>

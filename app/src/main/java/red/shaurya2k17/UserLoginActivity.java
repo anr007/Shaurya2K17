@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,12 +19,14 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -56,13 +60,9 @@ public class UserLoginActivity extends AppCompatActivity
 
     private static final int RC_SIGN_IN = 100;
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    //private String authEmail = "admin@shaurya.com";
+
     ValueEventListener listener;
-
-
-
     SharedPreferences status;
-    SharedPreferences.Editor editor;
     ProgressDialog mProgressDialog;
     EditText mEmailView;
     EditText mPasswordView;
@@ -73,6 +73,13 @@ public class UserLoginActivity extends AppCompatActivity
     GoogleApiClient mGoogleApiClient;
     Intent signInIntent;
     Context context;
+    VideoView login_video;
+    TextView admin_text;
+    View email_login_form;
+    View logo_view;
+
+
+
 
 
 
@@ -80,6 +87,44 @@ public class UserLoginActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_login);
+        email_login_form=findViewById(R.id.email_login_form);
+        logo_view=findViewById(R.id.logo_view_login);
+
+
+        login_video=(VideoView) findViewById(R.id.login_video);
+        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.login);
+
+        login_video.setDrawingCacheEnabled(true);
+        login_video.setVideoURI(uri);
+        login_video.requestFocus();
+        login_video.start();
+        login_video.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                mp.start();
+            }
+        });
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            Window window = getWindow();
+            //window.setNavigationBarColor(getResources().getColor(R.color.colorPrimary));
+            window.setStatusBarColor(getResources().getColor(R.color.colorPrimary));
+
+        }
+        admin_text=(TextView)findViewById(R.id.admin_text_login);
+        admin_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(email_login_form.getVisibility()==View.VISIBLE) {
+                    email_login_form.setVisibility(View.GONE);
+                    logo_view.setVisibility(View.VISIBLE);
+                }
+                else {
+                    email_login_form.setVisibility(View.VISIBLE);
+                    logo_view.setVisibility(View.GONE);
+                }
+            }
+        });
 
 
 
@@ -89,6 +134,7 @@ public class UserLoginActivity extends AppCompatActivity
         database = FirebaseDatabase.getInstance();
         mRef = database.getReference("users");
         mFirebaseAuth = FirebaseAuth.getInstance();
+
 
 
 
@@ -207,6 +253,7 @@ public class UserLoginActivity extends AppCompatActivity
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
+
                                     hideProgressDialog();
                                     status = context.getSharedPreferences("status", MODE_PRIVATE);
                                     status.edit().putBoolean("in",true).apply();
@@ -335,14 +382,12 @@ public class UserLoginActivity extends AppCompatActivity
                         if(task.isSuccessful())
                         {
 
+
                             TelephonyManager tm = (TelephonyManager)getSystemService
                                     (Context.TELEPHONY_SERVICE);
                             final String device_id = tm.getDeviceId();
                             final String Uid=mFirebaseAuth.getCurrentUser().getUid();
                             final String email=mFirebaseAuth.getCurrentUser().getEmail();
-
-
-
 
 
 
@@ -401,9 +446,6 @@ public class UserLoginActivity extends AppCompatActivity
                             mRef.addValueEventListener(listener);
 
 
-
-
-
                         }
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
@@ -419,13 +461,30 @@ public class UserLoginActivity extends AppCompatActivity
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
         //Toast.makeText(this, "Connection failed, Please try again", Toast.LENGTH_SHORT).show();
     }
-
-
 
 
     @Override
@@ -541,6 +600,13 @@ public class UserLoginActivity extends AppCompatActivity
 
     }
 
-
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        if(!login_video.isPlaying())
+        {
+            login_video.start();
+        }
+    }
 }
 

@@ -13,7 +13,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -60,8 +59,6 @@ public class DataEntryCricket2 extends Fragment implements AdapterView.OnItemSel
 
 
         String parray=((DataEntryActivity)getActivity()).t1+"_Cricket_Players";
-        Toast.makeText(getContext(),parray,Toast.LENGTH_LONG).show();
-
         ArrayList<String> teams=new ArrayList<>();
         teams.add(deflt);
         teams.add(((DataEntryActivity)getActivity()).t1);
@@ -125,13 +122,20 @@ public class DataEntryCricket2 extends Fragment implements AdapterView.OnItemSel
         mRef.child("Cricket").child(((DataEntryActivity)getActivity()).mat_name)
                 .child("tossWonPref").setValue(twp);
 
+        mRef.child("Cricket").child(((DataEntryActivity)getActivity()).mat_name)
+                                .child("curr_innings").setValue("1");
+
+        ((DataEntryActivity)getActivity()).curr_innings="1";
+        ((DataEntryActivity)getActivity()).curr_over="0";
+
 
         ((DataEntryActivity)getActivity()).toss_won=tw;
         ((DataEntryActivity)getActivity()).tosswon_pref=twp;
         if(((DataEntryActivity)getActivity()).toss_won.
-                equals(((DataEntryActivity)getActivity()).t1))
+                                                   equals(((DataEntryActivity)getActivity()).t1))
         {
             ((DataEntryActivity)getActivity()).t1_status=twp;
+
             if(twp.equals("batting"))
             ((DataEntryActivity)getActivity()).t2_status="bowling";
             else
@@ -157,6 +161,7 @@ public class DataEntryCricket2 extends Fragment implements AdapterView.OnItemSel
         {
             ((DataEntryActivity)getActivity()).t2s="0";
         }
+
 
          ((DataEntryActivity)getActivity()).replaceFragments(DataEntryCricket3.class,false,null);
 

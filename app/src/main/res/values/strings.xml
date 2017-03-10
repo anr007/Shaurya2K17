@@ -24,6 +24,7 @@
         <item>Cricket</item>
         <item>Football</item>
         <item>Volleyball</item>
+        <item>Badminton</item>
     </string-array>
 
 
@@ -98,10 +99,36 @@
         <item>ce4</item>
     </string-array>
 
-    <string-array name="CSE_Cricket_Players_Enrollment">
+    <string-array name="Runs">
 
-        <item>Select Enrollment</item>
-        <item>BT</item>
+        <item>Select No.of Runs</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+
+
+    <string-array name="Extras">
+
+        <item>Select Extras </item>
+        <item>none</item>
+        <item>No Ball</item>
+        <item>Wide</item>
+        <item>Byes</item>
+        <item>Over Throw</item>
+
+    </string-array>
+
+    <string-array name="Result">
+        <item>Select Outcome</item>
+        <item>none</item>
+        <item>Bowled</item>
+        <item>Caught Out</item>
+        <item>Run Out</item>
     </string-array>
 
 
@@ -110,6 +137,6 @@
         completions."
     </string>
     <string name="title_activity_splash_screen">Shaurya 2K17</string>
-
+    <string name="title_activity_about_shaurya">About Shaurya</string>
 
 </resources>

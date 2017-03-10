@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="red.shaurya2k17.Sports.Cricket.DataEntryOversSummary">
+    tools:context="red.shaurya2k17.Sports.Cricket.DataEntryInningsSummary">
 
     <ScrollView
         android:layout_width="match_parent"

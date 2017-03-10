@@ -16,6 +16,25 @@ public class CMatch {
     private String Comments;
     private String TossWon;
     private String TossWonPref;
+    private String Team1Wickets;
+    private String Team2Wickets;
+
+
+    public String getTeam1Wickets() {
+        return Team1Wickets;
+    }
+
+    public void setTeam1Wickets(String team1Wickets) {
+        Team1Wickets = team1Wickets;
+    }
+
+    public String getTeam2Wickets() {
+        return Team2Wickets;
+    }
+
+    public void setTeam2Wickets(String team2Wickets) {
+        Team2Wickets = team2Wickets;
+    }
 
     public String getTossWonPref() {
         return TossWonPref;

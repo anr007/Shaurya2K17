@@ -39,6 +39,7 @@ public class StatsFragment extends Fragment implements OnChartValueSelectedListe
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_stats, container, false);
+
     }
 
     @Override
@@ -67,8 +68,8 @@ public class StatsFragment extends Fragment implements OnChartValueSelectedListe
         //mChart.setHoleRadius(58f);
         //mChart.setTransparentCircleRadius(61f);
 
-        mChart.setHoleRadius(58f);
-        mChart.setTransparentCircleRadius(61f);
+        mChart.setHoleRadius(52f);
+        mChart.setTransparentCircleRadius(55f);
         mChart.setDrawCenterText(true);
         mChart.setRotationAngle(0);
         mChart.setRotationEnabled(true);
@@ -80,7 +81,7 @@ public class StatsFragment extends Fragment implements OnChartValueSelectedListe
 
         mChart.setOnChartValueSelectedListener(this);
 
-        mChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
+        mChart.animateY(1600, Easing.EasingOption.EaseInOutQuad);
 
         refreshData();
         // create pie data set
@@ -136,7 +137,7 @@ public class StatsFragment extends Fragment implements OnChartValueSelectedListe
     @Override
     public void onNothingSelected() {
 
-        Toast.makeText(getContext(),"haaaaaaaai",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(),"Select any Team",Toast.LENGTH_SHORT).show();
     }
 
     void swipeRefresh()

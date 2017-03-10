@@ -12,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -91,7 +90,7 @@ public class DataEntryCricket3 extends Fragment implements AdapterView.OnItemSel
             int array_id =getContext().getResources().getIdentifier(parray,"array",
                     getContext().getPackageName());
 
-            Toast.makeText(getContext(),parray,Toast.LENGTH_LONG).show();
+
             cbowler = (Spinner) view.findViewById(R.id.curr_bowler_dec_3);
 
 
@@ -108,7 +107,6 @@ public class DataEntryCricket3 extends Fragment implements AdapterView.OnItemSel
             int array_id=getContext().getResources().getIdentifier(parray,"array",
                     getContext().getPackageName());
 
-            Toast.makeText(getContext(),parray,Toast.LENGTH_LONG).show();
             cbowler = (Spinner) view.findViewById(R.id.curr_bowler_dec_3);
 
             ArrayAdapter<CharSequence> adapter_cbowler = ArrayAdapter.createFromResource(getContext(),
@@ -199,7 +197,6 @@ public class DataEntryCricket3 extends Fragment implements AdapterView.OnItemSel
                 .child("curr_non_striker").setValue(non_striker_name);
 
 
-
         // Bowler details ................................................................
 
         if((((DataEntryActivity)getActivity()).completed_bowlers != null)
@@ -222,6 +219,7 @@ public class DataEntryCricket3 extends Fragment implements AdapterView.OnItemSel
 
                 ((DataEntryActivity)getActivity())
                         .completed_bowlers.put(bowler_name,updated_details);
+
                 mRef.child("bowlers").child(((DataEntryActivity) getActivity()).t2).
                         child(((DataEntryActivity)getActivity()).mat_name).child(bowler_name).
                         child("overs").setValue(((DataEntryActivity)getActivity())
@@ -302,6 +300,16 @@ public class DataEntryCricket3 extends Fragment implements AdapterView.OnItemSel
                 current_striker.setRuns("0");
                 current_striker.setFours("0");
                 current_striker.setSixes("0");
+                current_striker.setBalls("0");
+
+                ArrayList<String> striker_details=new ArrayList<>();
+                striker_details.add("0");
+                striker_details.add("0");
+                striker_details.add("0");
+                striker_details.add("0");
+
+                ((DataEntryActivity)getActivity()).completed_batsmen.
+                                                         put(striker_name, striker_details);
 
                 mRef.child("batsmen").child(((DataEntryActivity) getActivity()).t1).
                         child(((DataEntryActivity) getActivity()).mat_name).child(striker_name).
@@ -315,6 +323,16 @@ public class DataEntryCricket3 extends Fragment implements AdapterView.OnItemSel
                 current_striker.setRuns("0");
                 current_striker.setFours("0");
                 current_striker.setSixes("0");
+                current_striker.setBalls("0");
+
+                ArrayList<String> striker_details=new ArrayList<>();
+                striker_details.add("0");
+                striker_details.add("0");
+                striker_details.add("0");
+                striker_details.add("0");
+
+                ((DataEntryActivity)getActivity()).completed_batsmen.
+                        put(striker_name, striker_details);
 
                 mRef.child("batsmen").child(((DataEntryActivity) getActivity()).t2).
                         child(((DataEntryActivity) getActivity()).mat_name).child(striker_name).
@@ -337,6 +355,17 @@ public class DataEntryCricket3 extends Fragment implements AdapterView.OnItemSel
                 current_non_striker.setRuns("0");
                 current_non_striker.setFours("0");
                 current_non_striker.setSixes("0");
+                current_non_striker.setBalls("0");
+
+
+                ArrayList<String> non_striker_details=new ArrayList<>();
+                non_striker_details.add("0");
+                non_striker_details.add("0");
+                non_striker_details.add("0");
+                non_striker_details.add("0");
+
+                ((DataEntryActivity)getActivity()).completed_batsmen.
+                        put(non_striker_name, non_striker_details);
 
                 mRef.child("batsmen").child(((DataEntryActivity) getActivity()).t1).
                         child(((DataEntryActivity) getActivity()).mat_name).child(non_striker_name).
@@ -350,6 +379,17 @@ public class DataEntryCricket3 extends Fragment implements AdapterView.OnItemSel
                 current_non_striker.setRuns("0");
                 current_non_striker.setFours("0");
                 current_non_striker.setSixes("0");
+                current_non_striker.setBalls("0");
+
+                ArrayList<String> non_striker_details=new ArrayList<>();
+                non_striker_details.add("0");
+                non_striker_details.add("0");
+                non_striker_details.add("0");
+                non_striker_details.add("0");
+
+                ((DataEntryActivity)getActivity()).completed_batsmen.
+                        put(non_striker_name, non_striker_details);
+
 
                 mRef.child("batsmen").child(((DataEntryActivity) getActivity()).t2).
                         child(((DataEntryActivity) getActivity()).mat_name).child(non_striker_name).
@@ -359,7 +399,9 @@ public class DataEntryCricket3 extends Fragment implements AdapterView.OnItemSel
 
         }
 
+        //TODO: Check the working and think for more possible conditions
 
+        ((DataEntryActivity)getActivity()).curr_ball="1";
 
         ((DataEntryActivity)getActivity()).replaceFragments(DataEntryOversMain.class,false,null);
     }

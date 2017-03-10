@@ -129,7 +129,13 @@ public class DataEntryCricketStart extends Fragment implements AdapterView.OnIte
                     cMatch.setTossWon("");
                     cMatch.setWinner("");
                     cMatch.setTossWonPref("");
+                    cMatch.setTeam1Wickets("0");
+                    cMatch.setTeam2Wickets("0");
                     mRef.child(cate).child(mat_nam.getText().toString()).setValue(cMatch);
+                    mRef.child(cate).child(mat_nam.getText().toString())
+                            .child("curr_over").setValue("0");
+                    mRef.child(cate).child(mat_nam.getText().toString())
+                            .child("curr_ball").setValue("0");
 
                     ((DataEntryActivity)getActivity()).mat_name=mat_nam.getText().toString();
                     ((DataEntryActivity)getActivity()).t1=team1;
@@ -139,6 +145,9 @@ public class DataEntryCricketStart extends Fragment implements AdapterView.OnIte
                     ((DataEntryActivity)getActivity()).curr_ball="0";
                     ((DataEntryActivity)getActivity()).t1s="0";
                     ((DataEntryActivity)getActivity()).t2s="0";
+                    ((DataEntryActivity)getActivity()).t1_wickets="0";
+                    ((DataEntryActivity)getActivity()).t2_wickets="0";
+
 
 
 

@@ -1,14 +1,29 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    style="@style/Theme.AppCompat.Light.NoActionBar"
     tools:context=".UserLoginActivity">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <VideoView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/login_video"
+            android:layout_gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"/>
+    </RelativeLayout>
 
     <!-- Login progress -->
     <ProgressBar
@@ -24,13 +39,58 @@
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:clipToPadding="true">
 
-        <LinearLayout
-            android:id="@+id/email_login_form"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:paddingBottom="25dp"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/logo_view_login">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:layout_alignParentTop="true"
+                    android:id="@+id/logo_login"
+                    app:srcCompat="@drawable/logo"
+                    android:layout_height="180dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:id="@+id/login_app_name"
+                    android:layout_below="@+id/logo_login"
+                    android:layout_marginTop="20dp"
+                    android:text="Shaurya 2K17"
+                    android:textAlignment="center"
+                    android:textSize="36sp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/colorPrimaryDark" />
+            </RelativeLayout>
+
+
+
+            <LinearLayout
+                android:id="@+id/email_login_form"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="30dp"
+                android:visibility="gone">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@android:color/white">
 
                 <EditText
                     android:id="@+id/email_usr_login"
@@ -39,10 +99,17 @@
                     android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
-                    android:drawableStart="@drawable/ic_email_teal_500_36dp"
-                    android:drawablePadding="10dp"/>
+                    android:textColor="@android:color/white"
+                    android:textColorHighlight="@android:color/white"
+                    android:backgroundTint="@android:color/white" />
+                </android.support.design.widget.TextInputLayout>
 
 
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@android:color/white"
+                    app:passwordToggleEnabled="true">
 
                 <EditText
                     android:id="@+id/pwd_usr_login"
@@ -51,27 +118,63 @@
                     android:hint="@string/prompt_password"
                     android:imeActionId="@+id/login"
                     android:imeActionLabel="@string/action_sign_in_short"
-                    android:imeOptions="actionUnspecified"
-                    android:drawableStart="@drawable/ic_vpn_key_teal_500_36dp"
-                    android:drawablePadding="10dp"
                     android:inputType="textPassword"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:textColor="@android:color/white"
+                    android:textColorHighlight="@android:color/white"
+                    android:backgroundTint="@android:color/white" />
+                </android.support.design.widget.TextInputLayout>
 
-            <Button
-                android:id="@+id/inbut_usr_login"
-                style="?android:textAppearanceSmall"
+                <Button
+                    android:id="@+id/inbut_usr_login"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/action_sign_in"
+                    android:textStyle="bold" />
+
+
+
+
+            </LinearLayout>
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/action_sign_in"
-                android:textStyle="bold" />
+                android:layout_alignParentBottom="true">
 
-            <com.google.android.gms.common.SignInButton
-                android:id="@+id/gin_but"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                <com.google.android.gms.common.SignInButton
+                    android:id="@+id/gin_but"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_above="@+id/admin_text_login"
+                    />
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:id="@+id/admin_text_login"
+                    android:layout_alignStart="@+id/gin_but"
+                    android:layout_alignEnd="@+id/gin_but"
+                    android:layout_margin="5dp"
+                    android:minHeight="40dp"
+                    android:padding="10dp"
+                    android:text="Admin? Sign in here"
+                    android:drawableLeft="@drawable/ic_lock_amber_400_24dp"
+                    android:textAlignment="center"
+                    android:layout_marginTop="10dp"
+                    android:textSize="14sp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@android:color/white"
+                    android:fontFamily="sans-serif"
+                    android:textStyle="normal|bold" />
+            </RelativeLayout>
 
-        </LinearLayout>
+        </RelativeLayout>
+
     </ScrollView>
-</LinearLayout>
+
+
+</FrameLayout>
